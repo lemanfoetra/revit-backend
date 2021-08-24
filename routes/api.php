@@ -25,3 +25,8 @@ Route::get(
     'user',
     [UserController::class, 'getAuthenticatedUser']
 )->middleware('auth.api.role:SEEKER,OWNER');
+
+Route::put(
+    'user',
+    [UserController::class, 'update']
+)->middleware('auth.api.role:SEEKER,OWNER');
