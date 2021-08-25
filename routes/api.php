@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Owner\Service;
+use App\Http\Controllers\Seeker\Bengkel;
 use App\Http\Controllers\Seeker\Home;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -48,4 +49,9 @@ Route::prefix('seeker')->group(function () {
     // Route Tab Home Seeker
     Route::get('/slider', [Home::class, 'slider'])->middleware('auth.api.role:SEEKER');
     Route::get('/bengkel_terdekat/{latitude}/{longitude}', [Home::class, 'bengkelTerdekat'])->middleware('auth.api.role:SEEKER');
+
+    // Route get data bengkel
+    Route::get('/bengkel/{id}', [Bengkel::class, 'index'])->middleware('auth.api.role:SEEKER');
+    Route::get('/bengkel/{id}/services', [Bengkel::class, 'allServices'])->middleware('auth.api.role:SEEKER');
+    Route::get('/bengkel/{id}/services/{service_id}', [Bengkel::class, 'service'])->middleware('auth.api.role:SEEKER');
 });
