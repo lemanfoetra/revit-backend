@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Sk\Geohash\Geohash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
@@ -103,6 +104,13 @@ class UserController extends Controller
             $user = User::where('id', $user->id)->first();
             $user->update($request->all());
 
+            // create Geohash code jika terdapat latitude - longitude
+            if ($request->latitude != null && $request->longitude != null) {
+                $user->update([
+                    'hashmap_code' => $this->makeGeohashCode($request->latitude, $request->longitude)
+                ]);
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Update data user berhasil.',
@@ -121,5 +129,12 @@ class UserController extends Controller
             ->where('email', $email)
             ->where('role', $role)
             ->first();
+    }
+
+
+    protected function makeGeohashCode($latitude, $longitude)
+    {
+        $g = new Geohash();
+        return $g->encode($latitude, $longitude, 10);
     }
 }
