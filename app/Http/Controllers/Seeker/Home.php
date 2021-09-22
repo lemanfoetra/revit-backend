@@ -30,6 +30,7 @@ class Home extends Controller
             ->orWhere('hashmap_code', 'like', $geoArea['SouthEast'] . '%')
             ->orWhere('hashmap_code', 'like', $geoArea['SouthWest'] . '%')
             ->orWhere('hashmap_code', 'like', $geoArea['NorthWest'] . '%')
+            ->limit(10)
             ->get();
 
         return response()->json(
