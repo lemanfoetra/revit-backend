@@ -48,7 +48,7 @@ Route::prefix('owner')->group(function () {
 Route::prefix('seeker')->group(function () {
     // Route Tab Home Seeker
     Route::get('/home/slider', [Home::class, 'slider'])->middleware('auth.api.role:SEEKER');
-    Route::get('/home/bengkel_terdekat/{latitude}/{longitude}', [Home::class, 'bengkelTerdekat'])->middleware('auth.api.role:SEEKER');
+    Route::get('/home/bengkel_terdekat/{latitude}/{longitude}/{limit?}', [Home::class, 'bengkelTerdekat'])->middleware('auth.api.role:SEEKER');
 
     // Route get data bengkel
     Route::get('/bengkel/{id}', [Bengkel::class, 'index'])->middleware('auth.api.role:SEEKER');

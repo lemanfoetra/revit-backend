@@ -14,7 +14,7 @@ class Home extends Controller
     }
 
 
-    public function bengkelTerdekat($latitude, $longitude)
+    public function bengkelTerdekat($latitude, $longitude, $limit = 500)
     {
         $hashCode   = $this->createGeoCode($latitude, $longitude);
         $hashCode   = substr($hashCode, 0, 5);
@@ -30,7 +30,7 @@ class Home extends Controller
             ->orWhere('hashmap_code', 'like', $geoArea['SouthEast'] . '%')
             ->orWhere('hashmap_code', 'like', $geoArea['SouthWest'] . '%')
             ->orWhere('hashmap_code', 'like', $geoArea['NorthWest'] . '%')
-            ->limit(10)
+            ->limit($limit)
             ->get();
 
         return response()->json(
