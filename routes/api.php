@@ -57,6 +57,6 @@ Route::prefix('seeker')->group(function () {
     Route::get('/bengkel/{id}/services/{service_id}', [Bengkel::class, 'service'])->middleware('auth.api.role:SEEKER');
 
     // Route pencarian bengkel
-    Route::get('/home/cari/{keyword}/{latitude}/{longitude}/{limit?}', [CariBengkel::class, 'cariBengkelTerdekat'])
+    Route::get('/bengkel/cari/{keyword}/{latitude}/{longitude}/{limit?}', [CariBengkel::class, 'cariBengkelTerdekat'])
         ->middleware('auth.api.role:SEEKER');
 });
