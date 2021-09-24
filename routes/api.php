@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Owner\Service;
 use App\Http\Controllers\Seeker\Bengkel;
+use App\Http\Controllers\Seeker\CariBengkel;
 use App\Http\Controllers\Seeker\Home;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -54,4 +55,8 @@ Route::prefix('seeker')->group(function () {
     Route::get('/bengkel/{id}', [Bengkel::class, 'index'])->middleware('auth.api.role:SEEKER');
     Route::get('/bengkel/{id}/services', [Bengkel::class, 'allServices'])->middleware('auth.api.role:SEEKER');
     Route::get('/bengkel/{id}/services/{service_id}', [Bengkel::class, 'service'])->middleware('auth.api.role:SEEKER');
+
+    // Route pencarian bengkel
+    Route::get('/home/cari/{keyword}/{latitude}/{longitude}/{limit?}', [CariBengkel::class, 'cariBengkelTerdekat'])
+        ->middleware('auth.api.role:SEEKER');
 });
