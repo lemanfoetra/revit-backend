@@ -38,6 +38,6 @@ class Bengkel extends Controller
 
     public function allServices($id)
     {
-        return ServiceResource::collection(Services::where('user_id', $id)->paginate(10));
+        return ServiceResource::collection(Services::where('user_id', $id)->paginate(1000));
     }
 }
