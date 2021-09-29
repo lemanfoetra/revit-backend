@@ -17,6 +17,7 @@ class CariBengkel extends Controller
         $geoArea    = $this->encodeGeoCode($hashCode);
 
         $results = DB::table('users')
+            ->where('hashmap_code', '<>', '', 'AND')
             ->where('name', 'like', "%" . $keyword . "%")
             ->orWhere('full_address', 'like', "%" . $keyword . "%")
             ->whereRaw("(

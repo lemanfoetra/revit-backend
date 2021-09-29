@@ -21,7 +21,8 @@ class Home extends Controller
         $geoArea    = $this->encodeGeoCode($hashCode);
 
         $users = DB::table('users')
-            ->where('hashmap_code', 'like', $hashCode . '%')
+            ->where('hashmap_code', '<>', '', 'AND')
+            ->where('hashmap_code', 'like', $hashCode . '%', 'AND')
             ->orWhere('hashmap_code', 'like', $geoArea['North'] . '%')
             ->orWhere('hashmap_code', 'like', $geoArea['East'] . '%')
             ->orWhere('hashmap_code', 'like', $geoArea['South'] . '%')
