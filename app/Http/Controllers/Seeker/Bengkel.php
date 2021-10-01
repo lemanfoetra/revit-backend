@@ -17,7 +17,7 @@ class Bengkel extends Controller
         $user = DB::table('users')
             ->select([
                 'users.*',
-                'wishlists.created_at AS wishlist_at',
+                'wishlists.id AS wishlist_at',
             ])
             ->where('users.id', $id)
             ->leftJoin('wishlists', function ($join) {
