@@ -23,12 +23,12 @@ class Bengkel extends Controller
             ->leftJoin('wishlists', function ($join) {
                 $join->on('users.id', '=', 'wishlists.bengkel_id');
                 $join->on('wishlists.user_id', '=', DB::raw(JWTAuth::user()->id));
-            })->get();
-            
+            })->first();
+
         return response()->json(
             [
-                'status'    => count($user) == 0 ? false : true,
-                'message'   => count($user) == 0 ? 'Bengkel tidak ditemukan' : 'Berhasil',
+                'status'    => $user == null ? false : true,
+                'message'   => $user == null  ? 'Bengkel tidak ditemukan' : 'Berhasil',
                 'data'      => $user
             ],
         );
