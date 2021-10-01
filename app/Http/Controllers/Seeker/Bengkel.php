@@ -16,17 +16,7 @@ class Bengkel extends Controller
     {
         $user = DB::table('users')
             ->select([
-                'users.id',
-                'users.name',
-                'users.latitude',
-                'users.longitude',
-                'users.hashmap_code',
-                'users.full_address',
-                'users.provinsi',
-                'users.kabkot',
-                'users.kecamatan',
-                'users.created_at',
-                'users.updated_at',
+                'users.*',
                 'wishlists.created_at AS wishlist_at',
             ])
             ->where('users.id', $id)
