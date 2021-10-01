@@ -4,6 +4,7 @@ use App\Http\Controllers\Owner\Service;
 use App\Http\Controllers\Seeker\Bengkel;
 use App\Http\Controllers\Seeker\CariBengkel;
 use App\Http\Controllers\Seeker\Home;
+use App\Http\Controllers\Seeker\Wishlist;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -59,4 +60,9 @@ Route::prefix('seeker')->group(function () {
     // Route pencarian bengkel
     Route::get('/bengkel/cari/{keyword}/{latitude}/{longitude}/{limit?}', [CariBengkel::class, 'cariBengkelTerdekat'])
         ->middleware('auth.api.role:SEEKER');
+
+    // Route wishlist
+    Route::get('/wishlist', [Wishlist::class, 'index'])->middleware('auth.api.role:SEEKER');
+    Route::post('/wishlist', [Wishlist::class, 'store'])->middleware('auth.api.role:SEEKER');
+    Route::delete('/wishlist/{id}', [Wishlist::class, 'destroy'])->middleware('auth.api.role:SEEKER');
 });

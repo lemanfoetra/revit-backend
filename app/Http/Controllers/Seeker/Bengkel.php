@@ -6,17 +6,39 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Owner\ServiceResource;
 use App\Models\Services;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Bengkel extends Controller
 {
 
-    public function index(User $id)
+    public function index($id)
     {
-        $user = $id;
+        $user = DB::table('users')
+            ->select([
+                'users.id',
+                'users.name',
+                'users.latitude',
+                'users.longitude',
+                'users.hashmap_code',
+                'users.full_address',
+                'users.provinsi',
+                'users.kabkot',
+                'users.kecamatan',
+                'users.created_at',
+                'users.updated_at',
+                'wishlists.created_at AS wishlist_at',
+            ])
+            ->where('users.id', $id)
+            ->leftJoin('wishlists', function ($join) {
+                $join->on('users.id', '=', 'wishlists.bengkel_id');
+                $join->on('wishlists.user_id', '=', DB::raw(JWTAuth::user()->id));
+            })->get();
+            
         return response()->json(
             [
-                'status'    => ($user == null) ? false : true,
-                'message'   => ($user == null) ? 'Bengkel tidak ditemukan' : 'Berhasil',
+                'status'    => count($user) == 0 ? false : true,
+                'message'   => count($user) == 0 ? 'Bengkel tidak ditemukan' : 'Berhasil',
                 'data'      => $user
             ],
         );
