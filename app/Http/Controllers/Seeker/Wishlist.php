@@ -19,7 +19,7 @@ class Wishlist extends Controller
         return WishlistResource::collection(
             ModelsWishlist::where('wishlists.user_id', $user->id)
                 ->join('users',  'users.id', '=', 'wishlists.bengkel_id')
-                ->paginate(15)
+                ->paginate(10)
         );
     }
 
