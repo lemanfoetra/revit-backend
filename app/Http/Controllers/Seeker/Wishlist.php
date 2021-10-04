@@ -7,6 +7,7 @@ use App\Http\Requests\Seeker\AddWishlist;
 use App\Http\Resources\Seeker\WishlistResource;
 use App\Models\Wishlist as ModelsWishlist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Wishlist extends Controller
@@ -15,7 +16,11 @@ class Wishlist extends Controller
     public function index()
     {
         $user = JWTAuth::user();
-        return WishlistResource::collection(ModelsWishlist::where('user_id', $user->id)->paginate(15));
+        return WishlistResource::collection(
+            ModelsWishlist::where('wishlists.user_id', $user->id)
+                ->join('users',  'users.id', '=', 'wishlists.bengkel_id')
+                ->paginate(15)
+        );
     }
 
 
@@ -29,7 +34,7 @@ class Wishlist extends Controller
     {
         $wishlist = ModelsWishlist::create([
             'user_id'   => JWTAuth::user()->id,
-            'bengkel_id'=> $request->bengkel_id,
+            'bengkel_id' => $request->bengkel_id,
         ]);
         return response()->json(
             [

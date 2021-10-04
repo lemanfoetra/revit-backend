@@ -65,4 +65,6 @@ Route::prefix('seeker')->group(function () {
     Route::get('/wishlist', [Wishlist::class, 'index'])->middleware('auth.api.role:SEEKER');
     Route::post('/wishlist', [Wishlist::class, 'store'])->middleware('auth.api.role:SEEKER');
     Route::delete('/wishlist/{id}', [Wishlist::class, 'destroy'])->middleware('auth.api.role:SEEKER');
+
+    Route::get('/wishlist/test', [Wishlist::class, 'test']);
 });
