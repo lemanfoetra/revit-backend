@@ -8,7 +8,7 @@ use Sk\Geohash\Geohash;
 
 class CariBengkel extends Controller
 {
-    
+
     public function cariBengkelTerdekat($keyword, $latitude, $longitude, $limit = 10)
     {
         $hashCode   = $this->createGeoCode($latitude, $longitude);
@@ -16,8 +16,9 @@ class CariBengkel extends Controller
         $geoArea    = $this->encodeGeoCode($hashCode);
 
         $results = DB::table('users')
+            ->where('role', 'OWNER')
             ->where('hashmap_code', '<>', '', 'AND')
-            ->whereRaw("( name LIKE ? OR full_address ? )", ["%$keyword%", "%$keyword%"])
+            ->whereRaw("( name LIKE ? OR full_address LIKE ? )", ["%$keyword%", "%$keyword%"])
             ->whereRaw("(
                 hashmap_code LIKE ? OR
                 hashmap_code LIKE ? OR
