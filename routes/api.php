@@ -4,6 +4,7 @@ use App\Http\Controllers\Owner\Service;
 use App\Http\Controllers\Seeker\Bengkel;
 use App\Http\Controllers\Seeker\CariBengkel;
 use App\Http\Controllers\Seeker\Home;
+use App\Http\Controllers\Visitor;
 use App\Http\Controllers\Seeker\Wishlist;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -44,6 +45,9 @@ Route::prefix('owner')->group(function () {
     Route::post('/service', [Service::class, 'store'])->middleware('auth.api.role:OWNER');
     Route::put('/service/{service}', [Service::class, 'update'])->middleware('auth.api.role:OWNER');
     Route::delete('/service/{service}', [Service::class, 'delete'])->middleware('auth.api.role:OWNER');
+
+    // Route get total visitor
+    Route::get('/visitor', [Visitor::class, 'index'])->middleware('auth.api.role:OWNER');
 });
 
 
@@ -66,5 +70,6 @@ Route::prefix('seeker')->group(function () {
     Route::post('/wishlist', [Wishlist::class, 'store'])->middleware('auth.api.role:SEEKER');
     Route::delete('/wishlist/{id}', [Wishlist::class, 'destroy'])->middleware('auth.api.role:SEEKER');
 
-    Route::get('/wishlist/test', [Wishlist::class, 'test']);
+    // Route add visitor
+    Route::post('/visitor', [Visitor::class, 'store'])->middleware('auth.api.role:SEEKER');
 });
