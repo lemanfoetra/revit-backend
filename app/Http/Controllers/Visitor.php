@@ -52,10 +52,10 @@ class Visitor extends Controller
         $user_id = JWTAuth::user()->id;
         $listDay = (array)$this->listDayOfWeek();
 
-        $name0 = date('d/m', strtotime($listDay[0]['firstday'])) . " - " . date('d/m', strtotime($listDay[0]['lastday']));
-        $name1 = date('d/m', strtotime($listDay[1]['firstday'])) . " - " . date('d/m', strtotime($listDay[1]['lastday']));
-        $name2 = date('d/m', strtotime($listDay[2]['firstday'])) . " - " . date('d/m', strtotime($listDay[2]['lastday']));
-        $name3 = date('d/m', strtotime($listDay[3]['firstday'])) . " - " . date('d/m', strtotime($listDay[3]['lastday']));
+        $name0 = date('d/M', strtotime($listDay[0]['firstday'])) . " - " . date('d/M', strtotime($listDay[0]['lastday']));
+        $name1 = date('d/M', strtotime($listDay[1]['firstday'])) . " - " . date('d/M', strtotime($listDay[1]['lastday']));
+        $name2 = date('d/M', strtotime($listDay[2]['firstday'])) . " - " . date('d/M', strtotime($listDay[2]['lastday']));
+        $name3 = date('d/M', strtotime($listDay[3]['firstday'])) . " - " . date('d/M', strtotime($listDay[3]['lastday']));
 
         $result = DB::table('visitors')
             ->select(DB::raw("
