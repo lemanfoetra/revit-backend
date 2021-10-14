@@ -46,8 +46,9 @@ Route::prefix('owner')->group(function () {
     Route::put('/service/{service}', [Service::class, 'update'])->middleware('auth.api.role:OWNER');
     Route::delete('/service/{service}', [Service::class, 'delete'])->middleware('auth.api.role:OWNER');
 
-    // Route get total visitor
-    Route::get('/visitor', [Visitor::class, 'index'])->middleware('auth.api.role:OWNER');
+    // Route DASHBOARD
+    Route::get('/visitor/days', [Visitor::class, 'days'])->middleware('auth.api.role:OWNER');
+    Route::get('/visitor/weeks', [Visitor::class, 'weeks'])->middleware('auth.api.role:OWNER');
 });
 
 
