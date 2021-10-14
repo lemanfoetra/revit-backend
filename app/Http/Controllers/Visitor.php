@@ -54,10 +54,10 @@ class Visitor extends Controller
 
         $result = DB::table('visitors')
             ->select(DB::raw("
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[0]['firstday'] . " 00:00:00' AND '" . $listDay[0]['lastday'] . " 23:59:59' ) AS '" . $listDay[0]['firstday'] . " sd " . $listDay[0]['lastday'] . "',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[1]['firstday'] . " 00:00:00' AND '" . $listDay[1]['lastday'] . " 23:59:59' ) AS '" . $listDay[1]['firstday'] . " sd " . $listDay[0]['lastday'] . "',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[2]['firstday'] . " 00:00:00' AND '" . $listDay[2]['lastday'] . " 23:59:59' ) AS '" . $listDay[2]['firstday'] . " sd " . $listDay[0]['lastday'] . "',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[3]['firstday'] . " 00:00:00' AND '" . $listDay[3]['lastday'] . " 23:59:59' ) AS '" . $listDay[3]['firstday'] . " sd " . $listDay[0]['lastday'] . "'
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[0]['firstday'] . " 00:00:00' AND '" . $listDay[0]['lastday'] . " 23:59:59' ) AS 'Minggu Sekarang',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[1]['firstday'] . " 00:00:00' AND '" . $listDay[1]['lastday'] . " 23:59:59' ) AS 'Minggu Sebelumnya',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[2]['firstday'] . " 00:00:00' AND '" . $listDay[2]['lastday'] . " 23:59:59' ) AS 'Minggu -2',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[3]['firstday'] . " 00:00:00' AND '" . $listDay[3]['lastday'] . " 23:59:59' ) AS 'Minggu -3'
             "))
             ->where('user_id', $user_id)
             ->first();
