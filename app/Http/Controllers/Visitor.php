@@ -52,12 +52,17 @@ class Visitor extends Controller
         $user_id = JWTAuth::user()->id;
         $listDay = (array)$this->listDayOfWeek();
 
+        $name0 = date('d/m', strtotime($listDay[0]['firstday'])) . " - " . date('d/m', strtotime($listDay[0]['lastday']));
+        $name1 = date('d/m', strtotime($listDay[1]['firstday'])) . " - " . date('d/m', strtotime($listDay[1]['lastday']));
+        $name2 = date('d/m', strtotime($listDay[2]['firstday'])) . " - " . date('d/m', strtotime($listDay[2]['lastday']));
+        $name3 = date('d/m', strtotime($listDay[3]['firstday'])) . " - " . date('d/m', strtotime($listDay[3]['lastday']));
+
         $result = DB::table('visitors')
             ->select(DB::raw("
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[0]['firstday'] . " 00:00:00' AND '" . $listDay[0]['lastday'] . " 23:59:59' ) AS 'Minggu Sekarang',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[1]['firstday'] . " 00:00:00' AND '" . $listDay[1]['lastday'] . " 23:59:59' ) AS 'Minggu Sebelumnya',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[2]['firstday'] . " 00:00:00' AND '" . $listDay[2]['lastday'] . " 23:59:59' ) AS 'Minggu -2',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[3]['firstday'] . " 00:00:00' AND '" . $listDay[3]['lastday'] . " 23:59:59' ) AS 'Minggu -3'
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[0]['firstday'] . " 00:00:00' AND '" . $listDay[0]['lastday'] . " 23:59:59' ) AS '" . $name0 . "',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[1]['firstday'] . " 00:00:00' AND '" . $listDay[1]['lastday'] . " 23:59:59' ) AS '" . $name1 . "',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[2]['firstday'] . " 00:00:00' AND '" . $listDay[2]['lastday'] . " 23:59:59' ) AS '" . $name2 . "',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '" . $listDay[3]['firstday'] . " 00:00:00' AND '" . $listDay[3]['lastday'] . " 23:59:59' ) AS '" . $name3 . "'
             "))
             ->where('user_id', $user_id)
             ->first();
