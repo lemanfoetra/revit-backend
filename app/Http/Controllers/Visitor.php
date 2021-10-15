@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Seeker\VisitorRequest;
 use App\Models\Visitors;
-use DateTime;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -23,15 +22,23 @@ class Visitor extends Controller
         $day5   = $this->reduceDay(5);
         $day6   = $this->reduceDay(6);
 
+        $name0 = date('d/m/Y', strtotime($day0));
+        $name1 = date('d/m/Y', strtotime($day1));
+        $name2 = date('d/m/Y', strtotime($day2));
+        $name3 = date('d/m/Y', strtotime($day3));
+        $name4 = date('d/m/Y', strtotime($day4));
+        $name5 = date('d/m/Y', strtotime($day5));
+        $name6 = date('d/m/Y', strtotime($day6));
+
         $result = DB::table('visitors')
             ->select(DB::raw("
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day0 00:00:00' AND '$day0 23:59:59' ) AS '$day0',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day1 00:00:00' AND '$day1 23:59:59' ) AS '$day1',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day2 00:00:00' AND '$day2 23:59:59' ) AS '$day2',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day3 00:00:00' AND '$day3 23:59:59' ) AS '$day3',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day4 00:00:00' AND '$day4 23:59:59' ) AS '$day4',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day5 00:00:00' AND '$day5 23:59:59' ) AS '$day5',
-                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day6 00:00:00' AND '$day6 23:59:59' ) AS '$day6' 
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day0 00:00:00' AND '$day0 23:59:59' ) AS '$name0',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day1 00:00:00' AND '$day1 23:59:59' ) AS '$name1',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day2 00:00:00' AND '$day2 23:59:59' ) AS '$name2',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day3 00:00:00' AND '$day3 23:59:59' ) AS '$name3',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day4 00:00:00' AND '$day4 23:59:59' ) AS '$name4',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day5 00:00:00' AND '$day5 23:59:59' ) AS '$name5',
+                (SELECT COUNT(id) FROM visitors WHERE user_id = '$user_id' AND created_at BETWEEN '$day6 00:00:00' AND '$day6 23:59:59' ) AS '$name6' 
             "))
             ->where('user_id', $user_id)
             ->first();
